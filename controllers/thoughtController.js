@@ -46,7 +46,7 @@ module.exports = {
   async updateThought(req, res) {
     try {
       const result = await Thought.findOneAndUpdate(
-        { _id: req.thoughtId },
+        { _id: req.params.thoughtId },
         { $set: req.body },
         { runValidators: true, new: true }
       );
@@ -54,8 +54,11 @@ module.exports = {
       if (!result) {
         res.status(400).json({ message: "Thought with that Id not found" });
       }
-      res.status(200).json(result);
+
+      console.log(result);
+      res.status(200).json({ message: "Thought updated successfully" });
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -69,7 +72,7 @@ module.exports = {
       if (!result) {
         res.status(400).json({ message: "Thought with that Id not found" });
       }
-      res.status(200).json(result);
+      res.status(200).json({ message: "Thought deleted successfully" });
     } catch (err) {
       res.status(500).json(err);
     }
@@ -90,13 +93,20 @@ module.exports = {
       if (!targetThought) {
         res.status(400).json({ message: "No thought found witht that Id" });
       }
-      const reactionResult = await Thought.create(req.body);
-      targetThought.reactions.push(reactionResult);
+      // const reactionResult = await Thought.create(req.body);
+      const { reactionBody } = req.body;
+
+      if (!reactionBody) {
+        res.status(400).json({ message: "No reaction body" });
+      }
+
+      targetThought.reactions.push({ reactionBody });
 
       await targetThought.save();
 
       res.status(200).json({ message: "Reaction is successfully created" });
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -110,8 +120,8 @@ module.exports = {
         res.status(400).json({ message: "No thought found witht that Id" });
       }
 
-      const targetReaction = await targetThought.reactions.pull({
-        _id: reactionId,
+      const targetReaction = targetThought.reactions.pull({
+        _id: req.params.reactionId,
       });
       if (!targetReaction) {
         res.status(400).json({ message: "No reaction found witht that Id" });
@@ -121,6 +131,7 @@ module.exports = {
 
       res.status(200).json({ message: "Reaction is successfully deleted" });
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
