@@ -2,6 +2,7 @@ const { ObjectId } = require("mongoose").Types;
 const { User, Thought } = require("../models");
 
 module.exports = {
+  // Retrieve thoughts
   async getThoughts(req, res) {
     try {
       const result = await Thought.find();
@@ -14,6 +15,7 @@ module.exports = {
     }
   },
 
+  // Retrieve a single thought
   async getSingleThought(req, res) {
     try {
       const result = await Thought.findOne({ _id: req.params.thoughtId });
@@ -26,8 +28,8 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // don't forget to push the created thought's `_id` to the associated user's `thoughts` array field
 
+  // Create thought and populate the associated user's `thoughts` array field
   async createThought(req, res) {
     try {
       const newThought = await Thought.create(req.body);
@@ -42,7 +44,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-
+  // Update thought
   async updateThought(req, res) {
     try {
       const result = await Thought.findOneAndUpdate(
@@ -54,15 +56,12 @@ module.exports = {
       if (!result) {
         res.status(400).json({ message: "Thought with that Id not found" });
       }
-
-      console.log(result);
       res.status(200).json({ message: "Thought updated successfully" });
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
   },
-
+  // Delete thought
   async deleteThought(req, res) {
     try {
       const result = await Thought.findOneAndDelete({
@@ -79,11 +78,7 @@ module.exports = {
   },
 
   // **`/api/thoughts/:thoughtId/reactions`**
-
-  // * `POST` to create a reaction stored in a single thought's `reactions` array field
-
-  // * `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
-
+  //  Create reaction stored in a single thought's `reactions` array field
   async createReaction(req, res) {
     try {
       const targetThought = await Thought.findOne({
@@ -93,24 +88,21 @@ module.exports = {
       if (!targetThought) {
         res.status(400).json({ message: "No thought found witht that Id" });
       }
-      // const reactionResult = await Thought.create(req.body);
       const { reactionBody } = req.body;
 
       if (!reactionBody) {
         res.status(400).json({ message: "No reaction body" });
       }
-
       targetThought.reactions.push({ reactionBody });
 
       await targetThought.save();
 
       res.status(200).json({ message: "Reaction is successfully created" });
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
   },
-
+  // Delete a reaction
   async deleteReaction(req, res) {
     try {
       const targetThought = await Thought.findOne({
@@ -126,12 +118,10 @@ module.exports = {
       if (!targetReaction) {
         res.status(400).json({ message: "No reaction found witht that Id" });
       }
-
       await targetThought.save();
 
       res.status(200).json({ message: "Reaction is successfully deleted" });
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
   },

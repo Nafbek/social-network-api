@@ -18,8 +18,6 @@ const userSchema = new Schema(
       validate: {
         validator: (v) => {
           return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(v);
-          // '$jsonSchema': { pattern: '@gmail.com' },
-          // $match: '@gmail.com'
         },
       },
     },
