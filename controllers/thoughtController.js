@@ -56,7 +56,7 @@ module.exports = {
       if (!result) {
         res.status(400).json({ message: "Thought with that Id not found" });
       }
-      res.status(200).json({ message: "Thought updated successfully" });
+      res.status(200).json(result);
     } catch (err) {
       res.status(500).json(err);
     }

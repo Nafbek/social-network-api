@@ -2,7 +2,7 @@
 
 ## Description
 
-This is an API developed for a social network web application that allows users to share their thoughts, react to the friends' thought and create a friend list. It is built using Express.js for handling HTTP requests, MongoDB as database, Mongoose ODM for object modelling, and are a native JavaScript 'Date' object to format timestamps.
+This is an Application Programming Interface (API) developed for a social network web application that allows users to share their thoughts, react to the friends' thought and create a friend list. It is built using Express.js for handling HTTP requests, MongoDB as database, Mongoose ODM for object modelling, and a native JavaScript 'Date' object to format timestamps.
 
 ## User Story
 
@@ -24,14 +24,18 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 
 ## Installation
 
+In order to use this application, ensure that you have Node.js and Node Package Manager (npm) installed on your local machine. Clone the repository, open the root directory of the application on your terminal.
+
 ## Usage
+
+First of all, run a command `npm install` to install the required dependencies. After installing the dependencies, run `npm start` or `npm run dev` to start the application.
 
 You can test the API'S GET, POST, PUT, and DELETE routes in insomnia or related tools to successfully retrieve, create, update, and delete data in the connected database.
 
 You can also follow the syntax below to view a walkthrough video that demonsatrates the functionality of the application.
 
-![Demo Video] ()
+![Demo Video] (https://drive.google.com/file/d/1nPnvGlEuqiA8QJdAuaGKoprqGAMCUdn_/view)
 
 ## License
 
-N/A
+This application is covered under the terms of the MIT License.

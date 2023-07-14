@@ -86,7 +86,7 @@ module.exports = {
       user.friends.push(friend._id);
 
       await user.save();
-      res.status(200).json({ message: "Friend successfully added" });
+      res.status(200).json(user);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -108,7 +108,7 @@ module.exports = {
       user.friends.pull(friend._id);
       await user.save();
 
-      res.status(200).json({ message: "Friend is successfully deleted" });
+      res.status(200).json({ message: "Friend is successfully deleted", user });
     } catch (err) {
       res.status(500).json(err);
     }
